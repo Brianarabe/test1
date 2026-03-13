@@ -1,0 +1,26 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}L.C. Arabe Realty{% endblock %}</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+<!-- HEADER -->
+{% include 'components/header.html' %}
+
+<!-- PAGE CONTENT -->
+{% block content %}
+{% endblock %}
+
+<!-- FOOTER -->
+{% include 'components/footer.html' %}
+
+</body>
+</html>
