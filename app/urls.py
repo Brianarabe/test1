@@ -15,7 +15,12 @@ from .views import (
     BuyerDashboardView,
     ManageAgentsView,
     ManagepropertiesView,
-    ViewBuyersView
+    ViewBuyersView,
+    agent_dashboard_view,
+    add_property,
+    edit_property,
+    delete_property
+
 )
 
 urlpatterns = [
@@ -44,7 +49,13 @@ urlpatterns = [
     # -------------------------
     # Agent Dashboard Section
     # -------------------------
-    path('agent_dashboard/', AgentDashboardView.as_view(), name='agent_dashboard'),
+    # Agent Dashboard Section
+    path('agent/dashboard/', AgentDashboardView.as_view(), name='agent_dashboard'),
+    path('agent/add-property/', add_property, name='add_property'),
+    path('agent/edit-property/<int:id>/', edit_property, name='edit_property'),
+    path('agent/delete-property/<int:id>/', delete_property, name='delete_property'),
+    path('agent/buyers/', ViewBuyersView.as_view(), name='view_buyers'),
+
     # agent Management Pages
     path('agent_dashboard/', AgentDashboardView.as_view(), name='agent_dashboard'),
     path('agent/buyers/', ViewBuyersView.as_view(), name='view_buyers'),   # View buyers

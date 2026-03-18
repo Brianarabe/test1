@@ -3,9 +3,11 @@ from django.views.generic import TemplateView
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
-from .models import CustomUser
+from django.contrib.auth import get_user_model
+from .models import CustomUser,Property
+from django.contrib.auth.decorators import login_required
 from django.views import View 
-
+from .forms import PropertyForm
 
 # LOGIN VIEW
 def login_view(request):
@@ -108,6 +110,62 @@ class ManagepropertiesView(LoginRequiredMixin, View):
         }
         return render(request, 'broker/manage_properties.html', context)
 
+
+@login_required
+def agent_dashboard_view(request):
+    buyers = User.objects.filter(user_type="buyer")
+    properties = Property.objects.filter(agent=request.user)
+    context = {
+        "buyers": buyers,
+        "properties": properties,
+    }
+    return render(request, "agent_dashboard.html", context)
+@login_required
+def add_property(request):
+    """
+    View for agents to add a new property listing.
+    """
+    if request.method == "POST":
+        form = PropertyForm(request.POST, request.FILES)
+        if form.is_valid():
+            property_instance = form.save(commit=False)
+            property_instance.agent = request.user  # link property to logged-in agent
+            property_instance.save()
+            return redirect("agent_dashboard")
+    else:
+        form = PropertyForm()
+    
+    return render(request, "agent/add_property.html", {"form": form})
+@login_required
+def edit_property(request, property_id):
+    """
+    View for agents to edit their property listing.
+    """
+    property_instance = get_object_or_404(Property, id=property_id, agent=request.user)
+    
+    if request.method == "POST":
+        form = PropertyForm(request.POST, request.FILES, instance=property_instance)
+        if form.is_valid():
+            form.save()
+            return redirect("agent_dashboard")
+    else:
+        form = PropertyForm(instance=property_instance)
+    
+    return render(request, "agent/edit_property.html", {"form": form, "property": property_instance})
+@login_required
+def delete_property(request, id):
+    """
+    Allows an agent to delete a property they own.
+    """
+    # Make sure the property belongs to the logged-in agent
+    property_instance = get_object_or_404(Property, id=id, agent=request.user)
+    
+    if request.method == "POST":
+        property_instance.delete()
+        return redirect("agent_dashboard")
+    
+    # Optional: confirm deletion page
+    return render(request, "agent/delete_property.html", {"property": property_instance})
 # -------------------------
 # Agent Dashboard Views
 # -------------------------
@@ -140,6 +198,18 @@ class ViewBuyersView(LoginRequiredMixin, View):
             'user_type': request.user.user_type,
         }
         return render(request, 'agent/view_buyers.html', context)
+    
+class ListingsPageView(TemplateView):
+    template_name = "listing.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context["properties"] = Property.objects.filter(
+            is_available=True
+        ).order_by("-created_at")
+
+        return context
 
 class BrokerDashboardView(TemplateView):
     template_name = 'broker_dashboard.html'
@@ -163,9 +233,6 @@ class AboutPageView(TemplateView):
 
 class ContactPageView(TemplateView):
     template_name = 'contact.html'
-
-class ListingsPageView(TemplateView):
-    template_name = 'listings.html'
 
 class SearchPageView(TemplateView):
     template_name = 'search.html'
