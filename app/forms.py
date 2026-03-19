@@ -13,4 +13,20 @@ class CustomAuthenticationForm(AuthenticationForm):
 class PropertyForm(forms.ModelForm):
     class Meta:
         model = Property
-        fields = ["title", "description", "price", "location", "image", "is_available"]
+        fields = [
+            "title",
+            "description",
+            "property_type",
+            "listing_status",
+            "price",
+            "location",
+            "city",
+            "province",
+            "bedrooms",
+            "bathrooms",
+            "floor_area",
+            "lot_area",
+            "parking_spaces",
+            "image",
+            "is_available"
+        ]

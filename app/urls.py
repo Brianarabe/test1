@@ -57,7 +57,6 @@ urlpatterns = [
     path('agent/buyers/', ViewBuyersView.as_view(), name='view_buyers'),
 
     # agent Management Pages
-    path('agent_dashboard/', AgentDashboardView.as_view(), name='agent_dashboard'),
     path('agent/buyers/', ViewBuyersView.as_view(), name='view_buyers'),   # View buyers
 
     path('buyer_dashboard/', BuyerDashboardView.as_view(), name='buyer_dashboard'),

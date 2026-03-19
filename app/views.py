@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import TemplateView
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -113,7 +113,7 @@ class ManagepropertiesView(LoginRequiredMixin, View):
 
 @login_required
 def agent_dashboard_view(request):
-    buyers = User.objects.filter(user_type="buyer")
+    buyers = CustomUser.objects.filter(user_type="buyer")
     properties = Property.objects.filter(agent=request.user)
     context = {
         "buyers": buyers,
@@ -132,6 +132,8 @@ def add_property(request):
             property_instance.agent = request.user  # link property to logged-in agent
             property_instance.save()
             return redirect("agent_dashboard")
+        else:
+            print(form.errors)
     else:
         form = PropertyForm()
     
