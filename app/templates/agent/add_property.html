@@ -1,10 +1,33 @@
 {% load static %}
-<h1>Add New Property</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Property</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
 
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn">Add Property</button>
-</form>
+<section class="form-container">
 
-<a href="{% url 'agent_dashboard' %}">Back to Dashboard</a>
+    <form method="POST" enctype="multipart/form-data" class="add-property-form">
+        {% csrf_token %}
+
+        <h3>Add New Property</h3>
+
+        {{ form.as_p }}
+
+        <button type="submit" class="btn">Add Property</button>
+
+        <p>
+            <a href="{% url 'agent_dashboard' %}">
+                ← Back to Dashboard
+            </a>
+        </p>
+
+    </form>
+
+</section>
+
+</body>
+</html>

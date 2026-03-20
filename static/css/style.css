@@ -1069,6 +1069,104 @@ section{
 
 }
 
+/* ADD PROPERTY FORM CUSTOM DESIGN */
+
+/* FORM LAYOUT */
+.add-property-form {
+   max-width: 70rem;
+   margin: 0 auto;
+   background: var(--white);
+   padding: 3rem;
+   border-radius: 1rem;
+   box-shadow: var(--box-shodow);
+}
+
+/* TITLE */
+.add-property-form h3 {
+   text-align: center;
+   font-size: 2.8rem;
+   margin-bottom: 2rem;
+   color: var(--black);
+}
+
+/* DJANGO FORM PARAGRAPH */
+.add-property-form p {
+   margin-bottom: 1.5rem;
+   text-align: left;
+}
+
+/* LABEL */
+.add-property-form label {
+   display: block;
+   font-size: 1.6rem;
+   margin-bottom: .5rem;
+   color: var(--black);
+   font-weight: 500;
+}
+
+/* INPUTS */
+.add-property-form input,
+.add-property-form select,
+.add-property-form textarea {
+   width: 100%;
+   padding: 1.3rem;
+   font-size: 1.6rem;
+   border: var(--border);
+   border-radius: .5rem;
+   background-color: #fafafa;
+   transition: all 0.2s ease;
+}
+
+/* TEXTAREA */
+.add-property-form textarea {
+   height: 12rem;
+   resize: none;
+}
+
+/* FOCUS EFFECT */
+.add-property-form input:focus,
+.add-property-form select:focus,
+.add-property-form textarea:focus {
+   border-color: var(--main-color);
+   background-color: var(--white);
+}
+
+/* FILE INPUT */
+.add-property-form input[type="file"] {
+   background-color: var(--white);
+   padding: .8rem;
+}
+
+/* CHECKBOX */
+.add-property-form input[type="checkbox"] {
+   width: auto;
+   margin-right: .5rem;
+}
+
+/* BUTTON */
+.add-property-form .btn {
+   margin-top: 2rem;
+}
+
+/* BACK LINK */
+.add-property-form a {
+   display: inline-block;
+   margin-top: 1rem;
+   color: var(--main-color);
+   font-size: 1.5rem;
+}
+
+.add-property-form a:hover {
+   text-decoration: underline;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+   .add-property-form {
+      padding: 2rem;
+   }
+}
+
 @media (max-width:450px){
 
    html{
