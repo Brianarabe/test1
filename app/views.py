@@ -139,20 +139,24 @@ def add_property(request):
     
     return render(request, "agent/add_property.html", {"form": form})
 @login_required
-def edit_property(request, property_id):
+def edit_property(request, id):
     """
-    View for agents to edit their property listing.
+    Allows an agent to edit their own property listing.
     """
-    property_instance = get_object_or_404(Property, id=property_id, agent=request.user)
-    
+    # Make sure property belongs to the logged-in agent
+    property_instance = get_object_or_404(Property, id=id, agent=request.user)
+
     if request.method == "POST":
         form = PropertyForm(request.POST, request.FILES, instance=property_instance)
         if form.is_valid():
             form.save()
+            messages.success(request, "Property updated successfully!")
             return redirect("agent_dashboard")
+        else:
+            messages.error(request, "Please correct the errors below.")
     else:
         form = PropertyForm(instance=property_instance)
-    
+
     return render(request, "agent/edit_property.html", {"form": form, "property": property_instance})
 @login_required
 def delete_property(request, id):
