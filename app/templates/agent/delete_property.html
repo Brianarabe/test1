@@ -6,5 +6,5 @@
 <form method="POST">
     {% csrf_token %}
     <button type="submit" class="delete-btn">Yes, Delete</button>
-    <a href="{% url 'agent/agent_dashboard' %}" class="btn">Cancel</a>
+    <a href="{% url 'agent_dashboard' %}" class="btn">Cancel</a>
 </form>

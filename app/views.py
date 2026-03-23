@@ -202,7 +202,7 @@ class ViewBuyersView(LoginRequiredMixin, View):
         return render(request, 'agent/view_buyers.html', context)
     
 class ListingsPageView(TemplateView):
-    template_name = "listing.html"
+    template_name = "agent/listings.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
