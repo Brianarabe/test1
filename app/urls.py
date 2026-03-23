@@ -50,7 +50,7 @@ urlpatterns = [
     # Agent Dashboard Section
     # -------------------------
     # Agent Dashboard Section
-    path('agent/dashboard/', AgentDashboardView.as_view(), name='agent_dashboard'),
+    path('agent/dashboard/', agent_dashboard_view, name='agent_dashboard'),
     path('agent/add-property/', add_property, name='add_property'),
     path('agent/edit-property/<int:id>/', edit_property, name='edit_property'),
     path('agent/delete-property/<int:id>/', delete_property, name='delete_property'),
