@@ -29,42 +29,47 @@
         <p>Manage agents and property listings below.</p>
     </section>
 
-    <section class="listings">
-        <div class="box-container">
-            <!-- Example cards -->
-            <div class="box">
-                <div class="admin">
-                    <h3>A</h3>
-                    <p>Agent Name</p>
-                    <span>Active</span>
-                </div>
-                <div class="thumb">
-                    <img src="{% static 'images/property1.jpg' %}" alt="Property Image">
-                    <div class="total-images"><i class="fas fa-images"></i>5</div>
-                    <div class="type"><span>For Sale</span></div>
-                    <div class="save"><button><i class="fas fa-heart"></i></button></div>
-                </div>
-                <div class="name">Property Name</div>
-                <div class="location"><i class="fas fa-map-marker-alt"></i>City, Country</div>
+   <section class="listings">
+    <div class="box-container">
+
+        {% for agent in agents %}
+        <div class="box">
+            <div class="admin">
+                <h3>{{ agent.first_name|slice:":1" }}</h3>
+                <p>{{ agent.first_name }}</p>
+
+                {% if agent.is_active %}
+                    <span style="color:green;">Active</span>
+                {% else %}
+                    <span style="color:red;">Inactive</span>
+                {% endif %}
             </div>
 
-            <div class="box">
-                <div class="admin">
-                    <h3>B</h3>
-                    <p>Agent Name</p>
-                    <span>Active</span>
+            <div class="thumb">
+                <img src="{% static 'images/property1.jpg' %}" alt="Agent Image">
+
+                <div class="total-images">
+                    <i class="fas fa-home"></i>
+                    {{ agent.property_set.count }} Properties
                 </div>
-                <div class="thumb">
-                    <img src="{% static 'images/property2.jpg' %}" alt="Property Image">
-                    <div class="total-images"><i class="fas fa-images"></i>3</div>
-                    <div class="type"><span>For Rent</span></div>
-                    <div class="save"><button><i class="fas fa-heart"></i></button></div>
+
+                <div class="type">
+                    <span>{{ agent.user_type|capfirst }}</span>
                 </div>
-                <div class="name">Property Name</div>
-                <div class="location"><i class="fas fa-map-marker-alt"></i>City, Country</div>
+            </div>
+
+            <div class="name">{{ agent.email }}</div>
+
+            <div class="location">
+                <i class="fas fa-phone"></i> {{ agent.phone }}
             </div>
         </div>
-    </section>
+        {% empty %}
+        <p>No active agents found.</p>
+        {% endfor %}
+
+    </div>
+</section>
 </main>
 
 {% include 'components/footer.html' %}

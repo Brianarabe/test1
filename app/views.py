@@ -82,6 +82,20 @@ def register_view(request):
 # -------------------------
 # broker Dashboard Views
 # -------------------------
+class BrokerDashboardView(LoginRequiredMixin, TemplateView):
+    template_name = 'broker_dashboard.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # Get ACTIVE agents only
+        agents = CustomUser.objects.filter(
+            user_type='agent',
+            is_active=True
+        )
+
+        context['agents'] = agents
+        return context
 
 class ManageAgentsView(LoginRequiredMixin, View):
     """
@@ -216,10 +230,6 @@ class ListingsPageView(TemplateView):
         ).order_by("-created_at")
 
         return context
-
-class BrokerDashboardView(TemplateView):
-    template_name = 'broker_dashboard.html'
-
 
 class AgentDashboardView(TemplateView):
     template_name = 'agent_dashboard.html'
