@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 
-
 class CustomUser(AbstractUser):
 
     phone = models.CharField(max_length=15, blank=True, null=True)
@@ -79,3 +78,4 @@ class PropertyImage(models.Model):
 
     def __str__(self):
         return f"Image for {self.property.title}"
+    

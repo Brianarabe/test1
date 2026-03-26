@@ -1,27 +1,35 @@
-{% load static %}
-
+{% load static %} 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}L.C. Arabe Realty{% endblock %}</title>
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 </head>
 
 <body>
 
-<!-- HEADER -->
-{% include 'components/header.html' %}
+    <!-- HEADER -->
+    {% include 'components/header.html' %}
 
-<!-- PAGE CONTENT -->
-{% block content %}
-{% include "search.html" %}
-{% endblock %}
+    <!-- PAGE CONTENT -->
+    {% block content %}
+        {% include "search.html" %}
 
-<!-- FOOTER -->
-{% include 'components/footer.html' %}
+        <!-- AGENT POSTS -->
+        <section class="listings">
+            <h1 class="heading">Agent Property Listings</h1>
+
+            {% include "components/agent_posts.html" %}
+        </section>
+    {% endblock %}
+
+    <!-- FOOTER -->
+    {% include 'components/footer.html' %}
 
 </body>
 </html>

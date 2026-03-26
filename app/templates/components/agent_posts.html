@@ -1,0 +1,59 @@
+<div class="box-container">
+
+{% if agent_properties and agent_properties.exists %}
+    {% for property in agent_properties %}
+    <div class="box">
+
+        <!-- Agent Info -->
+        <div class="admin">
+            <h3>{{ property.agent.username|first|upper }}</h3>
+            <div>
+                <p>{{ property.agent.username }}</p>
+                <span>{{ property.created_at|date:"M d, Y" }}</span>
+            </div>
+        </div>
+
+        <!-- Property Images -->
+        <div class="thumb">
+            <p class="total-images">
+                <i class="far fa-image"></i>
+                <span>{{ property.images.count }}</span>
+            </p>
+
+            <p class="type">
+                <span>{{ property.property_type }}</span>
+                <span>{{ property.listing_status }}</span>
+            </p>
+
+            {% if property.images.count > 0 %}
+                <!-- SHOW FIRST GALLERY IMAGE -->
+                <img src="{{ property.images.first.image.url }}" alt="Property Image">
+            {% elif property.image %}
+                <!-- FALLBACK TO MAIN IMAGE -->
+                <img src="{{ property.image.url }}" alt="Property Image">
+            {% else %}
+                <p>No Image Available</p>
+            {% endif %}
+        </div>
+
+        <!-- Property Details -->
+        <h3 class="name">{{ property.title }}</h3>
+
+        <p class="location">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>{{ property.location }}, {{ property.city }}</span>
+        </p>
+
+        <div class="flex">
+            <p><i class="fas fa-bed"></i> {{ property.bedrooms }}</p>
+            <p><i class="fas fa-bath"></i> {{ property.bathrooms }}</p>
+            <p><i class="fas fa-maximize"></i> {{ property.floor_area }} sqm</p>
+        </div>
+
+    </div>
+    {% endfor %}
+{% else %}
+    <p>No properties listed.</p>
+{% endif %}
+
+</div>
