@@ -4,7 +4,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.contrib.auth import get_user_model
-from .models import CustomUser,Property
+from .models import CustomUser,Property,PropertyImage
 from django.contrib.auth.decorators import login_required
 from django.views import View 
 from .forms import PropertyForm
@@ -134,24 +134,32 @@ def agent_dashboard_view(request):
         "properties": properties,
     }
     return render(request, "agent_dashboard.html", context)
+
 @login_required
 def add_property(request):
-    """
-    View for agents to add a new property listing.
-    """
     if request.method == "POST":
         form = PropertyForm(request.POST, request.FILES)
         if form.is_valid():
             property_instance = form.save(commit=False)
-            property_instance.agent = request.user  # link property to logged-in agent
+            property_instance.agent = request.user
             property_instance.save()
+
+            # ✅ SAVE MULTIPLE IMAGES
+            images = request.FILES.getlist('images')
+            for img in images:
+                PropertyImage.objects.create(
+                    property=property_instance,
+                    image=img
+                )
+
             return redirect("agent_dashboard")
         else:
             print(form.errors)
     else:
         form = PropertyForm()
-    
+
     return render(request, "agent/add_property.html", {"form": form})
+
 @login_required
 def edit_property(request, id):
     """
@@ -164,6 +172,14 @@ def edit_property(request, id):
         form = PropertyForm(request.POST, request.FILES, instance=property_instance)
         if form.is_valid():
             form.save()
+
+             # ✅ ADD NEW IMAGES (DOES NOT DELETE OLD ONES)
+            images = request.FILES.getlist('images')
+            for img in images:
+                PropertyImage.objects.create(
+                    property=property_instance,
+                    image=img
+                )
             messages.success(request, "Property updated successfully!")
             return redirect("agent_dashboard")
         else:
@@ -172,6 +188,7 @@ def edit_property(request, id):
         form = PropertyForm(instance=property_instance)
 
     return render(request, "agent/edit_property.html", {"form": form, "property": property_instance})
+
 @login_required
 def delete_property(request, id):
     """

@@ -27,8 +27,14 @@
 <span>{{ property.listing_status }}</span>
 </p>
 
-{% if property.image %}
-<img src="{{ property.image.url }}">
+{% if property.images.count > 0 %}
+    <!-- SHOW FIRST GALLERY IMAGE -->
+    <img src="{{ property.images.first.image.url }}" alt="Property Image">
+{% elif property.image %}
+    <!-- FALLBACK TO MAIN IMAGE -->
+    <img src="{{ property.image.url }}" alt="Property Image">
+{% else %}
+    <p>No Image Available</p>
 {% endif %}
 
 </div>

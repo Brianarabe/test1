@@ -15,14 +15,38 @@
 
         <h3>Add New Property</h3>
 
-        {{ form.as_p }}
+        <!-- Render all form fields except image -->
+        {% for field in form %}
+            {% if field.name != "image" %}
+                <p>
+                    {{ field.label_tag }}<br>
+                    {{ field }}
+                    {% if field.errors %}
+                        <span class="error">{{ field.errors }}</span>
+                    {% endif %}
+                </p>
+            {% endif %}
+        {% endfor %}
+
+        <!-- Main Image -->
+        <p>
+            {{ form.image.label_tag }}<br>
+            {{ form.image }}
+            {% if form.image.errors %}
+                <span class="error">{{ form.image.errors }}</span>
+            {% endif %}
+        </p>
+
+        <!-- Gallery Images -->
+        <p>
+            <label for="images">Gallery Images</label><br>
+            <input type="file" name="images" id="images" multiple>
+        </p>
 
         <button type="submit" class="btn">Add Property</button>
 
         <p>
-            <a href="{% url 'agent_dashboard' %}">
-                ← Back to Dashboard
-            </a>
+            <a href="{% url 'agent_dashboard' %}">← Back to Dashboard</a>
         </p>
 
     </form>
