@@ -12,7 +12,6 @@
 </head>
 
 <body>
-
     <!-- HEADER -->
     {% include 'components/header.html' %}
 
@@ -24,7 +23,8 @@
         <section class="listings">
             <h1 class="heading">Agent Property Listings</h1>
 
-            {% include "components/agent_posts.html" %}
+            {% include "agent/listings.html" %}
+            <p>Total properties: {{ properties|length }}</p>
         </section>
     {% endblock %}
 

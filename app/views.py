@@ -247,6 +247,18 @@ class ListingsPageView(TemplateView):
         ).order_by("-created_at")
 
         return context
+    
+class BasePageView(TemplateView):
+    template_name = 'base.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context["properties"] = Property.objects.filter(
+            is_available=True
+        ).order_by("-created_at")
+
+        return context
 
 class AgentDashboardView(TemplateView):
     template_name = 'agent_dashboard.html'
@@ -255,8 +267,7 @@ class AgentDashboardView(TemplateView):
 class BuyerDashboardView(TemplateView):
     template_name = 'buyer_dashboard.html'
 
-class BasePageView(TemplateView):
-    template_name = 'base.html'
+
 
 class HomePageView(TemplateView):
     template_name = 'home.html'
