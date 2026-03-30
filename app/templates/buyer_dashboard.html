@@ -49,6 +49,7 @@
 {% include 'components/footer.html' %}
 <!-- Links -->
 <a href="{% url 'base' %}" class="inline-btn">Home</a>
+<a href="{% url 'add_review' %}" class="btn">add review</a>
 <form action="{% url 'logout' %}" method="post" style="display:inline;">
     {% csrf_token %}
     <button type="submit" class="btn">Logout</button>

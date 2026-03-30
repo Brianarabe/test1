@@ -21,7 +21,9 @@ from .views import (
     agent_dashboard_view,
     add_property,
     edit_property,
-    delete_property
+    delete_property,
+    add_review,
+    Review
 
 )
 
@@ -62,7 +64,10 @@ urlpatterns = [
     path('agent/buyers/', ViewBuyersView.as_view(), name='view_buyers'),   # View buyers
 
     path('buyer_dashboard/', BuyerDashboardView.as_view(), name='buyer_dashboard'),
-]
+    
+    # Reviews
+    path('add-review/', add_review, name='add_review'),
+    ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import CustomUser,Property
+from .models import CustomUser,Property,Review
 
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
@@ -20,3 +20,8 @@ class PropertyForm(forms.ModelForm):
             "floor_area", "lot_area",
             "parking_spaces", "image", "is_available"
         ]
+
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = ['name', 'image', 'rating', 'comment']

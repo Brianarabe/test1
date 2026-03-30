@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import CustomUser,Property, PropertyImage
+from .models import CustomUser,Property, PropertyImage, Review
 
 class CustomUserAdmin(UserAdmin):
     model = CustomUser
@@ -10,3 +10,4 @@ class CustomUserAdmin(UserAdmin):
 admin.site.register(CustomUser, CustomUserAdmin)
 admin.site.register(Property)
 admin.site.register(PropertyImage)
+admin.site.register(Review)

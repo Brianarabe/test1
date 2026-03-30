@@ -4,10 +4,10 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.contrib.auth import get_user_model
-from .models import CustomUser,Property,PropertyImage
+from .models import CustomUser,Property,PropertyImage,Review
 from django.contrib.auth.decorators import login_required
 from django.views import View 
-from .forms import PropertyForm
+from .forms import PropertyForm,ReviewForm
 
 # LOGIN VIEW
 def login_view(request):
@@ -260,6 +260,30 @@ class BasePageView(TemplateView):
 
         return context
 
+def contact_view(request):
+    if request.method == "POST":
+        name = request.POST.get("name")
+        email = request.POST.get("email")
+        number = request.POST.get("number")
+        message = request.POST.get("message")
+
+        # You can save to DB or send email here
+        messages.success(request, "Message sent successfully!")
+
+        return redirect('contact')
+
+    return render(request, 'contact.html')
+def add_review(request):
+    if request.method == "POST":
+        form = ReviewForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('about')  # redirect after submit
+    else:
+        form = ReviewForm()
+
+    return render(request, 'review.html', {'form': form})
+
 class AgentDashboardView(TemplateView):
     template_name = 'agent_dashboard.html'
 
@@ -273,7 +297,12 @@ class HomePageView(TemplateView):
     template_name = 'home.html'
 
 class AboutPageView(TemplateView):
-    template_name = 'about.html'
+    template_name = "about.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["reviews"] = Review.objects.order_by("-created_at")
+        return context
 
 class ContactPageView(TemplateView):
     template_name = 'contact.html'

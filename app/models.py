@@ -79,3 +79,12 @@ class PropertyImage(models.Model):
     def __str__(self):
         return f"Image for {self.property.title}"
     
+class Review(models.Model):
+    name = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='reviews/', blank=True, null=True)
+    rating = models.IntegerField(default=5)
+    comment = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name

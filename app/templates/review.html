@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Add Review</title>
+
+   <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+{% include 'components/header.html' %}
+
+<section class="contact">
+
+   <h1 class="heading">submit your review</h1>
+
+   <form action="" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <input type="text" name="name" placeholder="your name" required class="box">
+
+      <input type="file" name="image" class="box">
+
+      <select name="rating" class="box" required>
+         <option value="">select rating</option>
+         <option value="5">⭐⭐⭐⭐⭐ (5)</option>
+         <option value="4">⭐⭐⭐⭐ (4)</option>
+         <option value="3">⭐⭐⭐ (3)</option>
+         <option value="2">⭐⭐ (2)</option>
+         <option value="1">⭐ (1)</option>
+      </select>
+
+      <textarea name="comment" placeholder="write your review..." class="box" required></textarea>
+
+      <input type="submit" value="submit review" class="btn">
+
+   </form>
+
+</section>
+
+</body>
+</html>
