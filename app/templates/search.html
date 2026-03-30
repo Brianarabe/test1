@@ -2,242 +2,143 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <meta charset="UTF-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Search Page</title>
+    <meta charset="UTF-8">
+    <title>Search Properties</title>
 
-   <!-- font awesome cdn link  -->
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
-
-   <!-- custom css file link  -->
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
-
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 </head>
 <body>
-   
-<!-- header section starts  -->
 
+<!-- 🔍 TOP SEARCH BAR -->
+<section class="search-bar">
 
+    <form method="GET" class="search-form">
 
-<!-- header section ends -->
+        <!-- Offer Type -->
+        <div class="field">
+            <label>OFFER TYPE</label>
+            <select name="listing_status">
+                <option value="">For Sale</option>
+            </select>
+        </div>
 
-<!-- search filter section starts  -->
+        <!-- Location -->
+        <div class="field location-field">
+            <label>LOCATION</label>
+            <div class="search-input">
+                <input type="text" name="city" placeholder="Search for a location or project name"
+                       value="{{ request.GET.city }}">
+                <i class="fas fa-search"></i>
+            </div>
+        </div>
 
-<section class="filters" style="padding-bottom: 0;">
+        <!-- Property Type -->
+        <div class="field">
+            <label>PROPERTY TYPE</label>
+            <select name="property_type">
+                <option value="">Any</option>
+                <option value="house_lot">House & Lot</option>
+            </select>
+        </div>
 
-   <form action="" method="post">
-      <div id="close-filter"><i class="fas fa-times"></i></div>
-      <h3>filter your search</h3>
-         
-         <div class="flex">
-            <div class="box">
-               <p>enter location</p>
-               <input type="text" name="location" required maxlength="50" placeholder="enter ciyt name" class="input">
+        <!-- PRICE (UPDATED ✅) -->
+        <div class="field price-field">
+            <label>PRICE</label>
+
+            <div class="price-inputs">
+                <div class="price-box">
+                    <span>₱</span>
+                    <input type="number" name="min_price" placeholder="Min"
+                           value="{{ request.GET.min_price }}">
+                </div>
+
+                <div class="price-box">
+                    <span>₱</span>
+                    <input type="number" name="max_price" placeholder="Max"
+                           value="{{ request.GET.max_price }}">
+                </div>
             </div>
-            <div class="box">
-               <p>offer type</p>
-               <select name="offer" class="input" required>
-                  <option value="sale">sale</option>
-                  <option value="resale">resale</option>
-               </select>
-            </div>
-            <div class="box">
-               <p>property type</p>
-               <select name="type" class="input" required>
-                  <option value="flat">flat</option>
-                  <option value="house">house</option>
-                  <option value="shop">shop</option>
-               </select>
-            </div>
-            <div class="box">
-               <p>how many bedroom</p>
-               <select name="bhk" class="input" required>
-                  <option value="1">1 bedroom</option>
-                  <option value="2">2 bedroom</option>
-                  <option value="3">3 bedroom</option>
-                  <option value="4">4 bedroom</option>
-               </select>
-            </div>
-            <div class="box">
-               <p>maximum budget</p>
-               <select name="minimum" class="input" required>
-                  <option value="1000000">₱ 1,000,000</option>
-                  <option value="2000000">₱ 2,000,000</option>
-                  <option value="3000000">₱ 3,000,000</option>
-                  <option value="4000000">₱ 4,000,000</option>
-                  <option value="5000000">₱ 5,000,000</option>
-                  <option value="6000000">₱ 6,000,000</option>
-                  <option value="7000000">₱ 7,000,000</option>
-                  <option value="8000000">₱ 8,000,000</option>
-                  <option value="9000000">₱ 9,000,000</option>
-                  <option value="10000000">₱ 10,000,000</option>
-                  <option value="20000000">₱ 20,000,000</option>
-                  <option value="30000000">₱ 30,000,000</option>
-                  <option value="40000000">₱ 40,000,000</option>
-                  <option value="50000000">₱ 50,000,000</option>
-                  <option value="60000000">₱ 60,000,000</option>
-                  <option value="70000000">₱ 70,000,000</option>
-                  <option value="80000000">₱ 80,000,000</option>
-                  <option value="90000000">₱ 90,000,000</option>
-              
-               </select>
-            </div>
-            <div class="box">
-               <p>maximum budget</p>
-               <select name="maximum" class="input" required>
-                  <option value="1000000">₱ 1,000,000</option>
-                  <option value="2000000">₱ 2,000,000</option>
-                  <option value="3000000">₱ 3,000,000</option>
-                  <option value="4000000">₱ 4,000,000</option>
-                  <option value="5000000">₱ 5,000,000</option>
-                  <option value="6000000">₱ 6,000,000</option>
-                  <option value="7000000">₱ 7,000,000</option>
-                  <option value="8000000">₱ 8,000,000</option>
-                  <option value="9000000">₱ 9,000,000</option>
-                  <option value="10000000">₱ 10,000,000</option>
-                  <option value="20000000">₱ 20,000,000</option>
-                  <option value="30000000">₱ 30,000,000</option>
-                  <option value="40000000">₱ 40,000,000</option>
-                  <option value="50000000">₱ 50,000,000</option>
-                  <option value="60000000">₱ 60,000,000</option>
-                  <option value="70000000">₱ 70,000,000</option>
-                  <option value="80000000">₱ 80,000,000</option>
-                  <option value="90000000">₱ 90,000,000</option>
-              
-               </select>
-            </div>
-            <div class="box">
-               <p>status</p>
-               <select name="status" class="input" required>
-                  <option value="ready to move">ready to move</option>
-                  <option value="under construction">under construction</option>
-               </select>
-            </div>
-            <div class="box">
-               <p>furnished</p>
-               <select name="furnished" class="input" required>
-                  <option value="unfurnished">unfurnished</option>
-                  <option value="furnished">furnished</option>
-                  <option value="semi-furnished">semi-furnished</option>
-               </select>
-            </div>
-         </div>
-         <input type="submit" value="search property" name="search" class="btn">
-   </form>
+        </div>
+
+        <!-- Beds -->
+        <div class="field">
+            <label>BEDS</label>
+            <select name="bedrooms">
+                <option value="">Any</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3+</option>
+            </select>
+        </div>
+
+        <!-- Filter Button -->
+        <div class="field icon-field">
+            <button type="submit">
+                <i class="fas fa-sliders-h"></i>
+            </button>
+        </div>
+
+    </form>
 
 </section>
 
-<!-- search filter section ends -->
 
-<div id="filter-btn" class="fas fa-filter"></div>
+<section class="search-page">
 
-<!-- listings section starts  -->
+   <!-- LEFT SIDE -->
+   <div class="search-results">
 
-<section class="listings">
+      <h1 class="heading">Properties</h1>
 
-   <h1 class="heading">searched results</h1>
+      <div class="box-container">
 
-   <div class="box-container">
+         {% for property in properties %}
+         <div class="property-card">
 
-      <div class="box">
-         <div class="admin">
-            <h3>j</h3>
-            <div>
-               <p>john deo</p>
-               <span>10-11-2022</span>
+            <div class="image-wrapper">
+               {% if property.image %}
+                  <img src="{{ property.image.url }}">
+               {% else %}
+                  <img src="{% static 'images/no-image.png' %}">
+               {% endif %}
             </div>
-         </div>
-         <div class="thumb">
-            <p class="total-images"><i class="far fa-image"></i><span>4</span></p>
-            <p class="type"><span>house</span><span>sale</span></p>
-            <form action="" method="post" class="save">
-               <button type="submit" name="save" class="far fa-heart"></button>
-            </form>
-            <img src="images/house-img-1.webp" alt="">
-         </div>
-         <h3 class="name">modern flats and appartments</h3>
-         <p class="location"><i class="fas fa-map-marker-alt"></i><span>andheri, mumbai, india - 401303</span></p>
-         <div class="flex">
-            <p><i class="fas fa-bed"></i><span>3</span></p>
-            <p><i class="fas fa-bath"></i><span>2</span></p>
-            <p><i class="fas fa-maximize"></i><span>750sqft</span></p>
-         </div>
-         <a href="view_property.html" class="btn">view property</a>
-      </div>
 
-      <div class="box">
-         <div class="admin">
-            <h3>j</h3>
-            <div>
-               <p>john deo</p>
-               <span>10-11-2022</span>
-            </div>
-         </div>
-         <div class="thumb">
-            <p class="total-images"><i class="far fa-image"></i><span>4</span></p>
-            <p class="type"><span>flat</span><span>sale</span></p>
-            <form action="" method="post" class="save">
-               <button type="submit" name="save" class="far fa-heart"></button>
-            </form>
-            <img src="images/house-img-2.webp" alt="">
-         </div>
-         <h3 class="name">modern flats and appartments</h3>
-         <p class="location"><i class="fas fa-map-marker-alt"></i><span>andheri, mumbai, india - 401303</span></p>
-         <div class="flex">
-            <p><i class="fas fa-bed"></i><span>3</span></p>
-            <p><i class="fas fa-bath"></i><span>2</span></p>
-            <p><i class="fas fa-maximize"></i><span>750sqft</span></p>
-         </div>
-         <a href="view_property.html" class="btn">view property</a>
-      </div>
+            <div class="content">
+               <h3>₱{{ property.price }}</h3>
+               <p class="title">{{ property.title }}</p>
 
-      <div class="box">
-         <div class="admin">
-            <h3>j</h3>
-            <div>
-               <p>john deo</p>
-               <span>10-11-2022</span>
+               <p class="details">
+                  {{ property.floor_area }} sqm • {{ property.lot_area }} lot
+               </p>
+
+               <p class="details">
+                  🛏 {{ property.bedrooms }} Beds • 🛁 {{ property.bathrooms }} Baths • 🚗 Garage
+               </p>
+
+               <div class="card-footer">
+                  <a href="#" class="view-btn">View Details</a>
+
+                  <span class="status">
+                     {% if property.is_available %}
+                        Available
+                     {% else %}
+                        Sold
+                     {% endif %}
+                  </span>
+               </div>
             </div>
+
          </div>
-         <div class="thumb">
-            <p class="total-images"><i class="far fa-image"></i><span>4</span></p>
-            <p class="type"><span>flat</span><span>sale</span></p>
-            <form action="" method="post" class="save">
-               <button type="submit" name="save" class="far fa-heart"></button>
-            </form>
-            <img src="images/house-img-3.jpg" alt="">
-         </div>
-         <h3 class="name">modern flats and appartments</h3>
-         <p class="location"><i class="fas fa-map-marker-alt"></i><span>andheri, mumbai, india - 401303</span></p>
-         <div class="flex">
-            <p><i class="fas fa-bed"></i><span>3</span></p>
-            <p><i class="fas fa-bath"></i><span>2</span></p>
-            <p><i class="fas fa-maximize"></i><span>750sqft</span></p>
-         </div>
-         <a href="view_property.html" class="btn">view property</a>
+         {% empty %}
+            <p>No properties found.</p>
+         {% endfor %}
+
       </div>
 
    </div>
 
 </section>
-
-<!-- listings section ends -->
-
-<!-- custom js file link  -->
-<script src="js/script.js"></script>
-
-<script>
-
-document.querySelector('#filter-btn').onclick = () =>{
-   document.querySelector('.filters').classList.add('active');
-}
-
-document.querySelector('#close-filter').onclick = () =>{
-   document.querySelector('.filters').classList.remove('active');
-}
-
-</script>
 
 </body>
 </html>

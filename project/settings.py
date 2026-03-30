@@ -110,3 +110,5 @@ STATIC_URL = '/static/'
 
 # Static folder at project root (beside manage.py)
 STATICFILES_DIRS = [BASE_DIR / "static"]
+
+STATIC_ROOT = BASE_DIR / "staticfiles"

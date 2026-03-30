@@ -18,14 +18,8 @@
     <!-- PAGE CONTENT -->
     {% block content %}
         {% include "search.html" %}
-
-        <!-- AGENT POSTS -->
-        <section class="listings">
-            <h1 class="heading">Agent Property Listings</h1>
-
-            {% include "components/agent_posts.html" %}
-            <p>Total properties: {{ properties|length }}</p>
-        </section>
+    <p>Total properties: {{ properties|length }}</p>
+       
     {% endblock %}
 
     <!-- FOOTER -->

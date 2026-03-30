@@ -23,7 +23,8 @@ from .views import (
     edit_property,
     delete_property,
     add_review,
-    Review
+    agents,
+    search_properties
 
 )
 
@@ -40,6 +41,7 @@ urlpatterns = [
     path('contact/', ContactPageView.as_view(), name='contact'),
     path('property/', View_propertyPageView.as_view(), name='property'),
     path('search/', SearchPageView.as_view(), name='search'),
+    path('search/', search_properties, name='search_properties'),
 
     # -------------------------
     # Broker Dashboard Section
@@ -53,7 +55,7 @@ urlpatterns = [
     # -------------------------
     # Agent Dashboard Section
     # -------------------------
-    # Agent Dashboard Section
+    path('agent/agents/', agents, name='agents'),
     path('agent/dashboard/', agent_dashboard_view, name='agent_dashboard'),
     path('agent/add-property/', add_property, name='add_property'),
     path('agent/edit-property/<int:id>/', edit_property, name='edit_property'),

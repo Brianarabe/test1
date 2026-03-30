@@ -206,6 +206,12 @@ def delete_property(request, id):
 # -------------------------
 # Agent Dashboard Views
 # -------------------------
+def agents(request):
+    agents = CustomUser.objects.filter(user_type='agent')
+
+    return render(request, 'agent/agents.html', {
+        'agents': agents
+    })
 
 class AgentDashboardView(LoginRequiredMixin, View):
     """
@@ -283,6 +289,39 @@ def add_review(request):
         form = ReviewForm()
 
     return render(request, 'review.html', {'form': form})
+
+def search_properties(request):
+    properties = Property.objects.filter(is_available=True)
+
+    # GET parameters
+    keyword = request.GET.get('keyword')
+    city = request.GET.get('city')
+    min_price = request.GET.get('min_price')
+    max_price = request.GET.get('max_price')
+    bedrooms = request.GET.get('bedrooms')
+
+    # Filtering logic
+    if keyword:
+        properties = properties.filter(title__icontains=keyword)
+
+    if city:
+        properties = properties.filter(city__icontains=city)
+
+    if min_price:
+        properties = properties.filter(price__gte=min_price)
+
+    if max_price:
+        properties = properties.filter(price__lte=max_price)
+
+    if bedrooms:
+        properties = properties.filter(bedrooms=bedrooms)
+
+    context = {
+        'properties': properties
+    }
+
+    return render(request, 'search.html', context)
+
 
 class AgentDashboardView(TemplateView):
     template_name = 'agent_dashboard.html'

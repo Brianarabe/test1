@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <title>Our Agents</title>
+
+   <link rel="stylesheet" href="{% static 'css/style.css' %}">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+{% include 'components/header.html' %}
+
+<section class="agents">
+
+   <h1 class="heading">Our Agents</h1>
+
+   <div class="box-container">
+
+      {% for agent in agents %}
+      <div class="box">
+
+         <!-- ICON / AVATAR -->
+         <div class="agent-icon">
+            <i class="fas fa-user-tie"></i>
+         </div>
+
+         <!-- NAME -->
+         <h3>{{ agent.username }}</h3>
+
+         <!-- EMAIL -->
+         <p>
+            <i class="fas fa-envelope"></i>
+            {{ agent.email }}
+         </p>
+
+         <!-- PHONE -->
+         <p>
+            <i class="fas fa-phone"></i>
+            {{ agent.phone|default:"No phone" }}
+         </p>
+
+         <!-- STATUS -->
+         {% if agent.is_verified %}
+            <span class="status verified">✔ Verified</span>
+         {% else %}
+            <span class="status not-verified">✖ Not Verified</span>
+         {% endif %}
+
+         <!-- BUTTON -->
+         <a href="#" class="inline-btn">Contact</a>
+
+      </div>
+      {% empty %}
+         <p class="empty">No agents found.</p>
+      {% endfor %}
+
+   </div>
+
+</section>
+
+</body>
+</html>

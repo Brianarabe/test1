@@ -1,76 +1,82 @@
 {% load static %}
+
+<section class="listings">
+
 <div class="box-container">
 
 {% for property in properties %}
 
 <div class="box">
 
-<div class="admin">
+   <!-- AGENT -->
+   <div class="admin">
+      <h3>{{ property.agent.username|first|upper }}</h3>
+      <div>
+         <p>{{ property.agent.username }}</p>
+         <span>{{ property.created_at|date:"M d, Y" }}</span>
+      </div>
+   </div>
 
-<h3>{{ property.agent.username|first|upper }}</h3>
+   <!-- IMAGE -->
+   <div class="thumb">
 
-<div>
-<p>{{ property.agent.username }}</p>
-<span>{{ property.created_at|date:"M d, Y" }}</span>
-</div>
+      <p class="total-images">
+         <i class="far fa-image"></i>
+         <span>{{ property.images.count|default:"0" }}</span>
+      </p>
 
-</div>
+      <p class="type">
+         <span>{{ property.get_property_type_display }}</span>
+         <span>{{ property.get_listing_status_display }}</span>
+      </p>
 
-<div class="thumb">
+      {% if property.images.all %}
+         <img src="{{ property.images.first.image.url }}" alt="Property Image">
+      {% elif property.image %}
+         <img src="{{ property.image.url }}" alt="Property Image">
+      {% else %}
+         <img src="{% static 'images/no-image.png' %}" alt="No Image">
+      {% endif %}
 
-<p class="total-images">
-<i class="far fa-image"></i>
-<span>{{ property.images.count }}</span>
-</p>
+   </div>
 
-<p class="type">
-<span>{{ property.property_type }}</span>
-<span>{{ property.listing_status }}</span>
-</p>
+   <!-- TITLE -->
+   <h3 class="name">{{ property.title }}</h3>
 
-{% if property.images.count > 0 %}
-    <!-- SHOW FIRST GALLERY IMAGE -->
-    <img src="{{ property.images.first.image.url }}" alt="Property Image">
-{% elif property.image %}
-    <!-- FALLBACK TO MAIN IMAGE -->
-    <img src="{{ property.image.url }}" alt="Property Image">
-{% else %}
-    <p>No Image Available</p>
-{% endif %}
+   <!-- LOCATION -->
+   <p class="location">
+      <i class="fas fa-map-marker-alt"></i>
+      <span>{{ property.location }}, {{ property.city }}</span>
+   </p>
 
-</div>
+   <!-- DETAILS -->
+   <div class="flex">
+      <p><i class="fas fa-bed"></i> <span>{{ property.bedrooms }}</span></p>
+      <p><i class="fas fa-bath"></i> <span>{{ property.bathrooms }}</span></p>
+      <p><i class="fas fa-expand"></i> <span>{{ property.floor_area }} sqm</span></p>
+   </div>
 
-<h3 class="name">{{ property.title }}</h3>
+   <!-- ACTIONS -->
+   <div style="margin-top:1rem; display:flex; gap:1rem;">
 
-<p class="location">
-<i class="fas fa-map-marker-alt"></i>
-<span>{{ property.location }}, {{ property.city }}</span>
-</p>
+      <a href="{% url 'edit_property' property.id %}" class="inline-btn">Edit</a>
 
-<div class="flex">
+      <form action="{% url 'delete_property' property.id %}" method="post">
+         {% csrf_token %}
+         <button type="submit" class="inline-btn" 
+            onclick="return confirm('Are you sure you want to delete this property?');">
+            Delete
+         </button>
+      </form>
 
-<p><i class="fas fa-bed"></i> {{ property.bedrooms }}</p>
-
-<p><i class="fas fa-bath"></i> {{ property.bathrooms }}</p>
-
-<p><i class="fas fa-maximize"></i> {{ property.floor_area }} sqm</p>
-
-</div>
-
-<div style="margin-top:10px;">
-
-<a href="{% url 'edit_property' property.id %}" class="btn">Edit</a>
-
-<form action="{% url 'delete_property' property.id %}" method="post" style="display:inline;">
-    {% csrf_token %}
-    <button type="submit" class="delete-btn">Delete</button>
-</form>
-</div>
+   </div>
 
 </div>
 
 {% empty %}
-<p>No properties listed.</p>
+<p style="text-align:center; font-size:1.6rem;">No properties listed.</p>
 {% endfor %}
 
 </div>
+
+</section>
