@@ -4,7 +4,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.contrib.auth import get_user_model
-from .models import CustomUser,Property,PropertyImage,Review
+from .models import CustomUser,Property,PropertyImage,Review, Partner
 from django.contrib.auth.decorators import login_required
 from django.views import View 
 from .forms import PropertyForm,ReviewForm
@@ -291,36 +291,34 @@ def add_review(request):
     return render(request, 'review.html', {'form': form})
 
 def search_properties(request):
-    properties = Property.objects.filter(is_available=True)
+    properties = Property.objects.all()
 
-    # GET parameters
-    keyword = request.GET.get('keyword')
     city = request.GET.get('city')
     min_price = request.GET.get('min_price')
     max_price = request.GET.get('max_price')
     bedrooms = request.GET.get('bedrooms')
 
-    # Filtering logic
-    if keyword:
-        properties = properties.filter(title__icontains=keyword)
+    # ✅ Ignore empty strings
+    if city and city.strip():
+        properties = properties.filter(city__icontains=city.strip())
 
-    if city:
-        properties = properties.filter(city__icontains=city)
-
-    if min_price:
+    if min_price and min_price != "":
         properties = properties.filter(price__gte=min_price)
 
-    if max_price:
+    if max_price and max_price != "":
         properties = properties.filter(price__lte=max_price)
 
-    if bedrooms:
-        properties = properties.filter(bedrooms=bedrooms)
+    if bedrooms and bedrooms != "":
+        if bedrooms == "3":
+            properties = properties.filter(bedrooms__gte=3)
+        else:
+            properties = properties.filter(bedrooms=bedrooms)
 
-    context = {
+    print("FINAL COUNT:", properties.count())  # DEBUG
+
+    return render(request, 'search.html', {
         'properties': properties
-    }
-
-    return render(request, 'search.html', context)
+    })
 
 def property_detail(request, id):
     property = get_object_or_404(Property, id=id)
@@ -331,6 +329,22 @@ def property_detail(request, id):
 
     return render(request, "view_property.html", context)
 
+def partnerships(request):
+    partners = Partner.objects.all()
+    print("PARTNERS COUNT:", partners.count()) 
+    return render(request, 'partnership.html', {'partners': partners})
+
+def home(request):
+    properties = Property.objects.all()
+    partners = Partner.objects.all()
+
+    print("PROPERTIES COUNT:", properties.count())
+    print("PARTNERS COUNT:", partners.count())
+
+    return render(request, 'home.html', {
+        'properties': properties,
+        'partners': partners
+    })
 
 class AgentDashboardView(TemplateView):
     template_name = 'agent_dashboard.html'
@@ -355,9 +369,10 @@ class AboutPageView(TemplateView):
 class ContactPageView(TemplateView):
     template_name = 'contact.html'
 
-class SearchPageView(TemplateView):
-    template_name = 'search.html'
+
 
 class View_propertyPageView(TemplateView):
     template_name = 'view_property.html'
 
+class BasePageView(TemplateView):
+    template_name = 'base.html'

@@ -7,7 +7,6 @@ from .views import (
     AboutPageView,
     ListingsPageView,
     View_propertyPageView,
-    SearchPageView,
     ContactPageView,
     BasePageView,
     register_view,
@@ -25,7 +24,9 @@ from .views import (
     add_review,
     agents,
     search_properties,
-    property_detail
+    property_detail,
+    partnerships,
+    home
 
 )
 
@@ -33,7 +34,8 @@ urlpatterns = [
     # -------------------------
     # Public / General Pages
     # -------------------------
-    path('', BasePageView.as_view(), name='base'),
+    path('', home, name='home'),
+    path('', HomePageView.as_view(), name='base'),
     path('register/', register_view, name='register'),
     path('login/', login_view, name='login'),
     path('logout/', LogoutView.as_view(next_page='login'), name='logout'),
@@ -41,7 +43,7 @@ urlpatterns = [
     path('agent/listings/', ListingsPageView.as_view(), name='listings'),
     path('contact/', ContactPageView.as_view(), name='contact'),
     path('property/', View_propertyPageView.as_view(), name='property'),
-    path('search/', SearchPageView.as_view(), name='search'),
+    
     path('search/', search_properties, name='search_properties'),
     path('property/<int:id>/', property_detail, name='property_detail'),
 
@@ -71,6 +73,8 @@ urlpatterns = [
     
     # Reviews
     path('add-review/', add_review, name='add_review'),
+
+    path('partnerships/', partnerships, name='partnerships'),
     ]
 
 if settings.DEBUG:

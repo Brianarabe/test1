@@ -17,11 +17,9 @@
 
     <!-- PAGE CONTENT -->
     {% block content %}
-        {% include "search.html" %}
-    <p>Total properties: {{ properties|length }}</p>
-       
+        {% include "search.html" %}   
     {% endblock %}
-
+    {% include 'partnership.html' %}
     <!-- FOOTER -->
     {% include 'components/footer.html' %}
 
