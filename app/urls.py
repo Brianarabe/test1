@@ -24,7 +24,8 @@ from .views import (
     delete_property,
     add_review,
     agents,
-    search_properties
+    search_properties,
+    property_detail
 
 )
 
@@ -42,6 +43,7 @@ urlpatterns = [
     path('property/', View_propertyPageView.as_view(), name='property'),
     path('search/', SearchPageView.as_view(), name='search'),
     path('search/', search_properties, name='search_properties'),
+    path('property/<int:id>/', property_detail, name='property_detail'),
 
     # -------------------------
     # Broker Dashboard Section

@@ -2,158 +2,82 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <meta charset="UTF-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>View Property</title>
-
-   <!-- font awesome cdn link  -->
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
-
-   <!-- custom css file link  -->
-   <link rel="stylesheet" href="{% static 'css/style.css' %}">
-
+    <meta charset="UTF-8">
+    <title>{{ property.title }}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-   
-<!-- header section starts  -->
 
-<header class="header">
+<section class="property-details">
 
-  <nav class="navbar nav-1">
-      <section class="flex">
-         <a href="home.html" class="logo"><img src=" {% static 'images/logo.png' %} "alt="LC Arabe Realty"></i>L. C. ARABE REALTY</a>
+    <div class="details-container">
 
-         <ul>
-            <li><a href="#">post property<i class="fas fa-paper-plane"></i></a></li>
-         </ul>
-      </section>
-   </nav>
+        <!-- LEFT: IMAGES -->
+        <div class="image-section">
 
-   <nav class="navbar nav-2">
-      <section class="flex">
-         <div id="menu-btn" class="fas fa-bars"></div>
+    <!-- MAIN IMAGE -->
+         {% if property.image %}
+        <div class="main-image-container">
+            <img src="{{ property.image.url }}" class="main-image" id="mainImage">
+        </div>
+         {% endif %}
 
-         <div class="menu">
-            <ul>
-               <li><a href="#">buy<i class="fas fa-angle-down"></i></a>
-                  <ul>
-                     <li><a href="#">house</a></li>
-                     <li><a href="#">flat</a></li>
-                     <li><a href="#">shop</a></li>
-                     <li><a href="#">ready to move</a></li>
-                     <li><a href="#">furnished</a></li>
-                  </ul>
-               </li>
-               <li><a href="#">sell<i class="fas fa-angle-down"></i></a>
-                  <ul>
-                     <li><a href="#">post property</a></li>
-                     <li><a href="#">dashboard</a></li>
-                  </ul>
-               </li>
-               <li><a href="#">help<i class="fas fa-angle-down"></i></a>
-                  <ul>
-                     <li><a href="about.html">about us</a></i></li>
-                     <li><a href="contact.html">contact us</a></i></li>
-                     <li><a href="contact.html#faq">FAQ</a></i></li>
-                  </ul>
-               </li>
-            </ul>
+         <!-- THUMBNAILS -->
+          <div class="gallery">
+        {% for img in property.images.all %}
+            <img src="{{ img.image.url }}" class="thumb">
+        {% endfor %}
          </div>
 
-         <ul>
-            <li><a href="#">saved <i class="far fa-heart"></i></a></li>
-            <li><a href="#">account <i class="fas fa-angle-down"></i></a>
-               <ul>
-                  <li><a href="login.html">login</a></li>
-                  <li><a href="register.html">register</a></li>
-               </ul>
-            </li>
-         </ul>
-      </section>
-   </nav>
+         <!-- SLIDER BUTTONS -->
+         <div class="slider-controls">
+            <button type="button" id="prevBtn">❮</button>
+            <button type="button" id="nextBtn">❯</button>
+         </div>
 
-</header>
+         </div>
 
-<!-- header section ends -->
+        <!-- RIGHT: DETAILS -->
+        <div class="info-section">
 
-<!-- view property section starts  -->
+            <h1>{{ property.title }}</h1>
 
-<section class="view-property">
+            <h2 class="price">₱{{ property.price }}</h2>
 
-   <div class="details">
-      <div class="thumb">
-         <div class="big-image">
-            <img src="images/house-img-1.webp" alt="">
-         </div>
-         <div class="small-images">
-            <img src="images/house-img-1.webp" alt="">
-            <img src="images/hall-img-1.webp" alt="">
-            <img src="images/kitchen-img-1.webp" alt="">
-            <img src="images/bathroom-img-1.webp" alt="">
-         </div>
-      </div>
-      <h3 class="name">modern flats and appartments</h3>
-      <p class="location"><i class="fas fa-map-marker-alt"></i><span>andheri, mumbai, india - 400104</span></p>
-      <div class="info">
-         <p><i class="fas fa-tag"></i><span>15 lac</span></p>
-         <p><i class="fas fa-user"></i><span>john deo (owner)</span></p>
-         <p><i class="fas fa-phone"></i><a href="tel:1234567890">1234567890</a></p>
-         <p><i class="fas fa-building"></i><span>flat</span></p>
-         <p><i class="fas fa-house"></i><span>sale</span></p>
-         <p><i class="fas fa-calendar"></i><span>10-11-2022</span></p>
-      </div>
-      <h3 class="title">details</h3>
-      <div class="flex">
-         <div class="box">
-            <p><i>rooms :</i><span>2 BHK</span></p>
-            <p><i>deposit amount :</i><span>0</span></p>
-            <p><i>status :</i><span>ready to move</span></p>
-            <p><i>bedroom :</i><span>3</span></p>
-            <p><i>bathroom :</i><span>2</span></p>
-            <p><i>balcony :</i><span>1</span></p>
-         </div>
-         <div class="box">
-            <p><i>carpet area :</i><span>750sqft</span></p>
-            <p><i>age :</i><span>3 years</span></p>
-            <p><i>room floor :</i><span>3</span></p>
-            <p><i>total floors :</i><span>22</span></p>
-            <p><i>furnished :</i><span>semi-furnished</span></p>
-            <p><i>loan :</i><span>available</span></p>
-         </div>
-      </div>
-      <h3 class="title">amenities</h3>
-      <div class="flex">
-         <div class="box">
-            <p><i class="fas fa-check"></i><span>lifts</span></p>
-            <p><i class="fas fa-check"></i><span>security guards</span></p>
-            <p><i class="fas fa-times"></i><span>play ground</span></p>
-            <p><i class="fas fa-check"></i><span>gardens</span></p>
-            <p><i class="fas fa-check"></i><span>water supply</span></p>
-            <p><i class="fas fa-check"></i><span>power backup</span></p>
-         </div>
-         <div class="box">
-            <p><i class="fas fa-check"></i><span>parking area</span></p>
-            <p><i class="fas fa-times"></i><span>gym</span></p>
-            <p><i class="fas fa-check"></i><span>shopping mall</span></p>
-            <p><i class="fas fa-check"></i><span>hospital</span></p>
-            <p><i class="fas fa-check"></i><span>schools</span></p>
-            <p><i class="fas fa-check"></i><span>market area</span></p>
-         </div>
-      </div>
-      <h3 class="title">description</h3>
-      <p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum cupiditate aliquid ipsum recusandae maxime nisi, velit eaque, libero, exercitationem culpa accusamus. Neque dolor quaerat modi saepe facere dignissimos temporibus molestias.</p>
-      <form action="" method="post">
-         <input type="submit" value="save property" name="save" class="inline-btn">
-      </form>
-   </div>
+            <p class="location">
+                📍 {{ property.city }}, {{ property.province }}
+            </p>
+
+            <div class="features">
+                <span>🛏 {{ property.bedrooms }} Beds</span>
+                <span>🛁 {{ property.bathrooms }} Baths</span>
+                <span>🚗 {{ property.parking_spaces }} Parking</span>
+            </div>
+
+            <div class="area">
+                Floor: {{ property.floor_area }} sqm |
+                Lot: {{ property.lot_area }} sqm
+            </div>
+
+            <p class="description">
+                {{ property.description }}
+            </p>
+
+            <span class="status-badge">
+                {% if property.is_available %}
+                    Available
+                {% else %}
+                    Sold
+                {% endif %}
+            </span>
+
+            <a href="{% url 'base' %}" class="inline-btn">← Back</a>
+
+        </div>
+
+    </div>
 
 </section>
-
-<!-- view property section ends -->
-
-<!-- custom js file link  -->
-<script src="js/script.js"></script>
-
+<script src="{% static 'js/script.js' %}"></script>
 </body>
 </html>

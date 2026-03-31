@@ -1,45 +1,109 @@
-let menu = document.querySelector('.header .menu');
+// =========================
+// MENU TOGGLE (SAFE)
+// =========================
+const menu = document.querySelector('.header .menu');
+const menuBtn = document.querySelector('#menu-btn');
 
-document.querySelector('#menu-btn').onclick = () =>{
-   menu.classList.toggle('active');
-}
-
-window.onscroll = () =>{
-   menu.classList.remove('active');
-}
-
-document.querySelectorAll('input[type="number"]').forEach(inputNumber => {
-   inputNumber.oninput = () =>{
-      if(inputNumber.value.length > inputNumber.maxLength) inputNumber.value = inputNumber.value.slice(0, inputNumber.maxLength);
+if(menu && menuBtn){
+   menuBtn.onclick = () => {
+      menu.classList.toggle('active');
    };
+
+   window.addEventListener('scroll', () => {
+      menu.classList.remove('active');
+   });
+}
+
+
+// =========================
+// NUMBER INPUT LIMIT FIX
+// =========================
+document.querySelectorAll('input[type="number"]').forEach(input => {
+   input.addEventListener("input", () => {
+      if(input.max){
+         input.value = Math.min(input.value, input.max);
+      }
+   });
 });
 
-document.querySelectorAll('.view-property .details .thumb .small-images img').forEach(images =>{
-   images.onclick = () =>{
-      src = images.getAttribute('src');
-      document.querySelector('.view-property .details .thumb .big-image img').src = src;
+
+// =========================
+// PROPERTY IMAGE SYSTEM
+// (CLICK + SLIDER + ZOOM)
+// =========================
+const mainImage = document.getElementById("mainImage");
+const thumbnails = document.querySelectorAll(".gallery img");
+const nextBtn = document.getElementById("nextBtn");
+const prevBtn = document.getElementById("prevBtn");
+
+if(mainImage && thumbnails.length > 0){
+
+   let currentIndex = 0;
+   const images = Array.from(thumbnails);
+
+   // CLICK THUMBNAIL
+   images.forEach((img, index) => {
+      img.addEventListener("click", function(){
+         mainImage.src = this.src;
+         currentIndex = index;
+      });
+   });
+
+   // NEXT BUTTON
+   if(nextBtn){
+      nextBtn.addEventListener("click", () => {
+         currentIndex = (currentIndex + 1) % images.length;
+         mainImage.src = images[currentIndex].src;
+      });
    }
-});
 
-document.querySelectorAll('.faq .box-container .box h3').forEach(headings =>{
-   headings.onclick = () =>{
-      headings.parentElement.classList.toggle('active');
+   // PREVIOUS BUTTON
+   if(prevBtn){
+      prevBtn.addEventListener("click", () => {
+         currentIndex = (currentIndex - 1 + images.length) % images.length;
+         mainImage.src = images[currentIndex].src;
+      });
    }
+
+   // ZOOM EFFECT
+   mainImage.addEventListener("mousemove", function(e){
+      const rect = this.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      const y = ((e.clientY - rect.top) / rect.height) * 100;
+
+      this.style.transformOrigin = x + "% " + y + "%";
+      this.style.transform = "scale(2)";
+   });
+
+   mainImage.addEventListener("mouseleave", function(){
+      this.style.transform = "scale(1)";
+   });
+}
+
+
+// =========================
+// FAQ TOGGLE
+// =========================
+document.querySelectorAll('.faq .box-container .box h3').forEach(head => {
+   head.addEventListener("click", () => {
+      head.parentElement.classList.toggle('active');
+   });
 });
 
-// role_message.js
+
+// =========================
+// ROLE MESSAGE ALERT
+// =========================
 document.addEventListener('DOMContentLoaded', () => {
-    const messages = document.querySelectorAll('.role-message');
+   const messages = document.querySelectorAll('.role-message');
 
-    messages.forEach(msg => {
-        const messageText = msg.dataset.message;
-        const userType = msg.dataset.userType;
+   messages.forEach(msg => {
+      const messageText = msg.dataset.message;
+      const userType = msg.dataset.userType;
 
-        if (messageText) {
-            alert(messageText);  // simple pop-up
-            // Optionally, you could customize with SweetAlert or a nicer modal
-            console.log(`User type: ${userType}`);
-        }
-    });
+      if(messageText){
+         alert(messageText);
+         console.log(`User type: ${userType}`);
+      }
+   });
 });
-

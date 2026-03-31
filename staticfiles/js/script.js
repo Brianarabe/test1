@@ -43,3 +43,45 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+const mainImage = document.getElementById("mainImage");
+    const thumbnails = document.querySelectorAll(".thumb");
+
+    let currentIndex = 0;
+
+    // Convert NodeList to Array
+    const images = Array.from(thumbnails);
+
+    // CLICK THUMBNAIL
+    images.forEach((img, index) => {
+        img.addEventListener("click", function(){
+            mainImage.src = this.src;
+            currentIndex = index;
+        });
+    });
+
+    // NEXT BUTTON
+    document.getElementById("nextBtn").onclick = function(){
+        currentIndex = (currentIndex + 1) % images.length;
+        mainImage.src = images[currentIndex].src;
+    };
+
+    // PREV BUTTON
+    document.getElementById("prevBtn").onclick = function(){
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        mainImage.src = images[currentIndex].src;
+    };
+
+    // ZOOM EFFECT
+    mainImage.addEventListener("mousemove", function(e){
+        const rect = this.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+
+        this.style.transformOrigin = x + "% " + y + "%";
+        this.style.transform = "scale(2)";
+    });
+
+    mainImage.addEventListener("mouseleave", function(){
+        this.style.transform = "scale(1)";
+    });
+

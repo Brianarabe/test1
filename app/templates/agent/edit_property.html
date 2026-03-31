@@ -39,17 +39,29 @@
             {% endif %}
         </p>
 
-        <!-- Existing Gallery Images -->
+       <!-- ✅ EXISTING MULTIPLE IMAGES WITH DELETE OPTION -->
         {% if property.images.all %}
-            <p>Existing Gallery Images:</p>
+            <p><strong>Existing Gallery Images:</strong></p>
             <div class="existing-images">
                 {% for img in property.images.all %}
-                    <img src="{{ img.image.url }}" alt="Gallery Image" width="100" style="margin-right:5px;">
+                    <div style="display:inline-block; margin:10px;">
+                        <img src="{{ img.image.url }}" width="120"><br>
+
+                        <!-- DELETE CHECKBOX -->
+                        <label>
+                            <input type="checkbox" name="delete_images" value="{{ img.id }}">
+                            Delete
+                        </label>
+                    </div>
                 {% endfor %}
             </div>
         {% endif %}
 
-       
+        <!-- ✅ ADD NEW MULTIPLE IMAGES -->
+        <p>
+            <label>Add More Images</label><br>
+            <input type="file" name="images" multiple>
+        </p>
 
         <button type="submit" class="btn">Save Changes</button>
 

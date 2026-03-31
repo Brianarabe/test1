@@ -117,7 +117,7 @@
                </p>
 
                <div class="card-footer">
-                  <a href="#" class="view-btn">View Details</a>
+                  <a href="{% url 'property_detail' property.id %}" class="view-btn">View Details</a>
 
                   <span class="status">
                      {% if property.is_available %}

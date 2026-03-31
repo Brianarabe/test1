@@ -322,6 +322,15 @@ def search_properties(request):
 
     return render(request, 'search.html', context)
 
+def property_detail(request, id):
+    property = get_object_or_404(Property, id=id)
+
+    context = {
+        "property": property
+    }
+
+    return render(request, "view_property.html", context)
+
 
 class AgentDashboardView(TemplateView):
     template_name = 'agent_dashboard.html'
