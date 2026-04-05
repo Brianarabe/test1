@@ -173,13 +173,16 @@ def edit_property(request, id):
         if form.is_valid():
             form.save()
 
-             # ✅ ADD NEW IMAGES (DOES NOT DELETE OLD ONES)
+            delete_images = request.POST.getlist('delete_images')
+            if delete_images:
+                PropertyImage.objects.filter(id__in=delete_images, property=property_instance).delete()
             images = request.FILES.getlist('images')
             for img in images:
                 PropertyImage.objects.create(
                     property=property_instance,
                     image=img
                 )
+
             messages.success(request, "Property updated successfully!")
             return redirect("agent_dashboard")
         else:
